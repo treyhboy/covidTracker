@@ -6,20 +6,29 @@ import Header from "../components/Header";
 import Highlights from "../components/Highlights";
 import DetailTable from "../components/DetailTable";
 import Spinner from "react-bootstrap/Spinner";
-import { getHighlightsData, getResponse } from "../helpers";
+import { useParams } from "react-router-dom";
+import { getStateHighlightsData, getResponse } from "../helpers";
+import { stateKeyVsName } from "../constants";
 
-const Home = () => {
+const State = () => {
   const [response, setResponse] = useState(null);
+  const { stateCode } = useParams();
   useEffect(() => {
     (async () => setResponse(await getResponse()))();
   }, []);
   if (response) {
-    const highlightsData = getHighlightsData(response);
+    const highlightsData = getStateHighlightsData(response[stateCode].total);
     return (
       <div className="app-container">
-        <Header enableSearch />
-        <Highlights highlightsData={highlightsData} header={"India"} />
-        <DetailTable detailsData={response} mode={"state"} />
+        <Header />
+        <Highlights
+          highlightsData={highlightsData}
+          header={stateKeyVsName[stateCode]}
+        />
+        <DetailTable
+          detailsData={response[stateCode].districts}
+          mode={"district"}
+        />
       </div>
     );
   }
@@ -29,4 +38,4 @@ const Home = () => {
     </div>
   );
 };
-export default Home;
+export default State;
