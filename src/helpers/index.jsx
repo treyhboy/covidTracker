@@ -1,5 +1,6 @@
 import { stateKeys, stateKeyVsName, stateNames } from "../constants";
 import { apiEndpoint } from "../constants";
+const cacheClearInterval = 1000000;
 export const getHighlightsData = (response) => {
   let totalConfirmed = 0;
   let totalActive = 0;
@@ -39,7 +40,15 @@ export const findOptions = (input) => {
   return matches;
 };
 export const getResponse = async () => {
-  let response = await fetch(apiEndpoint);
-  response = await response.json();
-  return response;
+  const responseCache = JSON.parse(localStorage.getItem("responseCache"));
+  const timeStamp = localStorage.getItem("timeStamp");
+  const cacheSavedInterval = Date.now() - timeStamp;
+  if (!responseCache && cacheSavedInterval > cacheClearInterval) {
+    let response = await fetch(apiEndpoint);
+    response = await response.json();
+    localStorage.setItem("responseCache", JSON.stringify(response));
+    localStorage.setItem("timeStamp", Date.now());
+    return response;
+  }
+  return responseCache;
 };
