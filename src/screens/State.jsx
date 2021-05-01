@@ -27,7 +27,7 @@ const State = () => {
         />
         <DetailTable
           detailsData={response[stateCode].districts}
-          mode={"district"}
+          mode={"District"}
         />
       </div>
     );

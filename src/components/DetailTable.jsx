@@ -48,7 +48,7 @@ const DetailTable = (props) => {
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
-            <th>State</th>
+            <th>{props.mode}</th>
             <th>Confirmed</th>
             <th>Active</th>
             <th>Recovered</th>
@@ -56,7 +56,7 @@ const DetailTable = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.mode === "state" ? (
+          {props.mode === "State" ? (
             <StateRowRenderer
               detailsData={props.detailsData}
               history={history}

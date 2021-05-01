@@ -19,7 +19,7 @@ const Home = () => {
       <div className="app-container">
         <Header enableSearch />
         <Highlights highlightsData={highlightsData} header={"India"} />
-        <DetailTable detailsData={response} mode={"state"} />
+        <DetailTable detailsData={response} mode={"State"} />
       </div>
     );
   }
